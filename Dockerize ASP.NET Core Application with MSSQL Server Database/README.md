@@ -7,6 +7,7 @@
 | 04 | [Docker-Compose File Setup](#04) |
 | 05 | [Environment Variable Setup](#05) |
 | 06 | [Build and Up the Docker-Compose](#06) |
+| 07 | [Restore the Database](#07) |
 
 ### <a name="01">:diamond_shape_with_a_dot_inside: &nbsp;Application Setup</a> 
 - Download the application source code by running this command: ````git clone https://github.com/Projects-of-Shadikul/Project-10.git````.
@@ -133,11 +134,10 @@ Now our all necessry files are ready. It's time to build and up our docker-compo
 - Run this command to show the list of running container: ````docker ps````. There two container will be running, One is web app container and other one is the database.
 - Now go to your browser and enter your server ip or localhost then hit enter button. You will see a page like below:
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-1.png" alt="Login Page"><br>
-  Now provide the **Username: Sadik** and **Password: admin**
-  This credentials will fetch and check from database and redirect you into the next page.
-  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
+Our web application is running successfully. Now it's time to restore the database.
 
-You have successfully did this. Now if you want to connect the container database into **SQL Server Management Studio (SSMS)** then you need to do this following steps:
+### <a name="07">:diamond_shape_with_a_dot_inside: &nbsp;Restore the Database </a>  
+Now we need to connect the container database into **SQL Server Management Studio (SSMS)**. To connect we need to do this following steps:
 - Open SSMS:- Press windows key --> Scroll down and click Microsoft SQL Server Tools --> Click Microsoft SQL Server Management Studio
 - Provide the Credentials:
   **Server Type:** Database Engine
@@ -148,8 +148,19 @@ You have successfully did this. Now if you want to connect the container databas
   
   Your Provided information will look like below:
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
+  Click **Connect**. You will be connected to the database.
   
-  Now click **Connect**. You will be connected to the database.
+  Now we will restore the database that we copied into the database container from the host machine by building the **dbDockerfile**. To restore the database we need to follow this steps:
+  - Go to SSMS. We already connected with the db container so just right click of the **Database** and click **Restore Database** options. 
+    <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
+  - A new window will appear, Select **Device** and click on the right side three dots. Again a new winodw will open clcik on **Add**. Again a new window will open which will show the file system of this container. Scroll up/down and select **/home** folder. One the right side you can see the database backup file named **dbbackup.bak**. Select the backup file and click Ok, then again click Ok,
+
+
+  Now provide the **Username: Sadik** and **Password: admin**
+  This credentials will fetch and check from database and redirect you into the next page.
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
+
+You have successfully did this. 
   
   
   
