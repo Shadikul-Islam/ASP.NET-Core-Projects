@@ -175,8 +175,8 @@ This is the main page of this sample application.
 
 ### <a name="08">:diamond_shape_with_a_dot_inside: &nbsp;Create Image from Container</a> 
 We have the application and database containers which is perfectly working for our project. Now we will create our own application image from those containers. To do that we need to follow the following steps:
-- First, run this command ````docker ps```` to check the running container.
-  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-10.png" alt="Docker Running Containers"> <br>
+- First, run this command ````docker ps```` to check the running containers.
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-10.png" alt="Docker Running Containers"> <br><br>
   We can see that our container's names are **project-10_web_1** and **project-10_db_1**.
 - Run this command to create an image from the container: ````docker commit ContainerName ImageName````. In our case the command will be for Web Container: ````docker commit project-10_web_1 dot-net-core-app````. For Database Container: ````docker commit project-10_db_1 dot-net-core-db````. Here our application image name will be **dot-net-core-app** and the database image name will be **dot-net-core-db**.
 - Our application image has been created. We can check it by running this command: ````docker images````.
