@@ -5,12 +5,12 @@
 | 02 | [Application Dockerfile Setup](#02) |
 | 03 | [Database Dockerfile Setup](#03) |
 | 04 | [Docker-Compose File Setup](#04) |
-| 05 | [](#05) |
+| 05 | [Build and Up the Docker-Compose](#05) |
 | 06 | [](#06) |
 
 ### <a name="01">:diamond_shape_with_a_dot_inside: &nbsp;Application Setup</a> 
-- Download the application source code by running this command: ````git clone https://github.com/Shadikul-Islam/ASP.NET-Core-Projects.git````.
-- Now go to the folder by running this command: ````cd ASP.NET-Core-Projects/'Dockerize ASP.NET Core Application with MSSQL Server Database'````.
+- Download the application source code by running this command: ````git clone https://github.com/Projects-of-Shadikul/Project-10.git````.
+- Now go to the folder by running this command: ````cd Project-10````.
 - Now you can see all of the files by running  ````ls -a```` command.
 - The most important thing is we need to know the place where we need to set the database credentials of this project. In the **Models** folder, we have a file named 
 **MyDBContext**. We need to open that file. Run this command to open it: ````vi Models/MyDBContext.cs````. We can see **SqlConnection** under the **MyDBContext**
@@ -19,14 +19,14 @@ Here our **Database Source** will be ````db```` which we will declare on the **d
 
 ### <a name="02">:diamond_shape_with_a_dot_inside: &nbsp;Application Dockerfile Setup</a> 
 By running this command: ````vi Dockerfile```` you can open the Docekerfile and you can see my Dockerfile of this project. Let's discuss in detail what the Dockerfile will do.
-- These portions of the lines will create an intermediate image from the base image and expose the ports.
+- This portion of the lines will create an intermediate image from the base image and expose the ports.
 ```
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 ```
-- These portions of the lines will copy the code into the working source directory, restore the nugets packages, build the code and publish the code into Publish directory.
+- This portion of the lines will copy the code into the working source directory, restore the nugets packages, build the code and publish the code into Publish directory.
 ````
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
@@ -35,10 +35,11 @@ RUN dotnet restore "./K8STestApp.csproj"
 COPY . .
 WORKDIR "/src/K8STestApp"
 RUN dotnet build "/src/K8STestApp.csproj" -c Release -o /app/build
+
 FROM build AS publish
 RUN dotnet publish "/src/K8STestApp.csproj" -c Release -o /app/publish
 ````
-- These portions of the lines will copy the publish directory into the final directory and it will create the final production-ready image which runs when the container is started running.
+- This portion of the lines will copy the publish directory into the final directory and it will create the final production-ready image which runs when the container is started running.
 ````
 FROM base AS final
 WORKDIR /app
@@ -80,8 +81,52 @@ COPY ./dbbackup.bak .
 ````
 
 ### <a name="04">:diamond_shape_with_a_dot_inside: &nbsp;Docker-Compose File Setup</a>
+By running this command: ````vi docker-compose.yml```` you can open the docker-compose and you can see my docker-compose file of this project. Let's discuss in detail what the docker-compose.yml file will do.
 
+- This portion of the lines is for the web application. It will build the **Dockerfile** and open the port **80** and keep the application container under a network named **app-network**. It will be dependent on **db** portion.
+````
+version: "3.9"
+services:
+    web:
+        build: .
+        ports:
+            - "80:80"
+        depends_on:
+            - db
+        networks:
+            - app-network
+````
+- This portion of the lines is for the database. It will build the **dbDockerfile**. Set the Database **sa** password. Open port **1433** and keep the database container under a network named **app-network**.
 
+````
+    db:
+        build:
+           context: ./
+           dockerfile: dbDockerfile
+        environment:
+            SA_PASSWORD: ${SA_PASSWORD}
+            ACCEPT_EULA: ${ACCEPT_EULA}
+        ports:
+         - "1433:1433"
+        networks:
+            - app-network
+````
+
+- This portion of the lines is defying the Network as a **bridge network** for the container of the **app-network**.
+
+````
+networks:
+  app-network:
+    driver: bridge
+````
+
+### <a name="05">:diamond_shape_with_a_dot_inside: &nbsp;Build and Up the Docker-Compose</a> 
+
+Now our all necessry files are ready. It's time to build and up our docker-compose file to create image and run the container. 
+- Run this command to do that: ````docker-compose up -d --build````.
+- Run this command to show the list of running container: ````docker ps````.
+- Now go to your browser and enter your server ip or localhost then hit eneter button. You will see a page like this:
+  
 
 
 ...
