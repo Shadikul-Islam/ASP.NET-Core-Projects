@@ -11,7 +11,7 @@ namespace K8STestApp.Models
 {
     public class MyDBContext
     {
-        SqlConnection con = new SqlConnection("Data Source=db;Initial Catalog=dbbackup;Integrated Security=false; User Id=sa; Password=rootpa@sw0rdmysql");
+        SqlConnection con = new SqlConnection("Data Source=db;Initial Catalog=mytestdb;Integrated Security=false; User Id=sa; Password=rootpa@sw0rdmysql");
         public bool LoginCheck(LoginModels ad)
         {
             bool isAuthenticated = false;
