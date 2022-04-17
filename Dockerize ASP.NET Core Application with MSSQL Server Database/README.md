@@ -84,7 +84,7 @@ COPY ./dbbackup.bak .
 ### <a name="04">:diamond_shape_with_a_dot_inside: &nbsp;Docker-Compose File Setup</a>
 By running this command: ````vi docker-compose.yml```` you can open the docker-compose and you can see my docker-compose file of this project. Let's discuss in detail what the docker-compose.yml file will do.
 
-- This portion of the lines is for the web application. It will build the **Dockerfile** and open the port **80** and keep the application container under a network named **app-network**. It will be dependent on **db** portion.
+- This portion of the lines is for the web application. It will build the **Dockerfile** and open the port **80** and keep the application container under a network named **app-network**. It will be dependent on **db**.
 ````
 version: "3.9"
 services:
@@ -122,50 +122,54 @@ networks:
 ````
 
 ### <a name="05">:diamond_shape_with_a_dot_inside: &nbsp;Environment Variable Setup</a> 
-Run ````ls -a```` command, you can see a file named **.env**. Open the file by running ````vi .env`````this command. Here I have declared the database credentials.
+Run ````ls -a```` command, you can see a file named **.env**. Open the file by running ````vi .env```` this command. Here I have declared the database credentials.
 ````
 SA_PASSWORD=rootpa@sw0rdmysql
 ACCEPT_EULA=Y
 ````
 
 ### <a name="06">:diamond_shape_with_a_dot_inside: &nbsp;Build and Up the Docker-Compose</a> 
-Now our all necessry files are ready. It's time to build and up our docker-compose file to create image and run the container. 
+Now all the necessary files are ready. It's time to build and up our docker-compose file to create the image and run the container. 
 - Run this command to do that: ````docker-compose up -d --build````.
-- Run this command to show the list of running container: ````docker ps````. There two container will be running, One is web app container and other one is the database.
-- Now go to your browser and enter your server ip or localhost then hit enter button. You will see a page like below:
+- Run this command to show the list of running containers: ````docker ps````. There are two containers that will be running, One is the web app container and the other one is the database.
+- Now go to your browser and enter your server IP or localhost then hit enter button. You will see a page like the below:
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-1.png" alt="Login Page"><br>
 Our web application is running successfully. Now it's time to restore the database.
 
 ### <a name="07">:diamond_shape_with_a_dot_inside: &nbsp;Restore the Database </a>  
-Now we need to connect the container database into **SQL Server Management Studio (SSMS)**. To connect we need to do this following steps:
+Now we need to connect the container database to **SQL Server Management Studio (SSMS)**. To connect we need to do the following steps:
 - Open SSMS:- Press windows key --> Scroll down and click Microsoft SQL Server Tools --> Click Microsoft SQL Server Management Studio
 - Provide the Credentials:
   **Server Type:** Database Engine
-  **Server Name:** IP Address of the server/Localhost, Port _(In my case my IP address of the VM is 20.25.66.233 and Port we provided in the docker-compose file 1433)_
-  **Authentication:** Select **SQL Server Authentication** from the dropdown
-  **Login:** sa _(We provided **sa** as a Login Username)_
-  **Password:** rootpa@sw0rdmysql _(We provided this password in the .env file)_
   
-  Your Provided information will look like below:
+  **Server Name:** IP Address of the server/localhost, Port _(In my case my IP address of the VM is 20.25.66.233, and Port we provided in the docker-compose file 1433)_
+  
+  **Authentication:** Select **SQL Server Authentication** from the dropdown
+  
+  **Login:** sa _(**sa** will be the database Login Username)_
+  
+  **Password:** rootpa@sw0rdmysql _(We provided this password in the .env file before)_
+  
+  Your Provided information will look like the below:
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-3.png" alt="DB Credentials"> <br><br>
   Click **Connect**. You will be connected to the database.
   
-Now we will restore the database that we copied into the database container from the host machine by building the **dbDockerfile**. To restore the database we need to follow this steps:
-- Go to SSMS. We already connected with the db container so just right click of the **Database** and click **Restore Database** options. 
+Now we will restore the database that we copied into the database container from the host machine by building the **dbDockerfile**. To restore the database we need to follow these steps:
+- Go to SSMS. We already connected with the DB container so just right-click the **Database** and click the **Restore Database** options. 
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-4.png" alt="Restore Database"> <br><br>
 - A new window will appear, Select **Device** and click on the right side three dots. 
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-5.png" alt="Restore Database"> <br><br>
-  Again a new winodw will open clcik on **Add**. 
+  Again a new window will open click on **Add**. 
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-6.png" alt="Restore Database"> <br><br>
-  Again a new window will open which will show the file system of this container. Scroll up/down and select **home** folder. On the right side you can see the database backup file named **dbbackup.bak**. 
+  Again a new window will open which will show the file system of this container. Scroll up/down and select the **home** folder. On the right side, you will see the database backup file named **dbbackup.bak**.
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-8.png" alt="Restore Database"> <br><br>
-  Select the backup file and click Ok, then again click Ok. Now you can see that your dbbackup.bak file has been selected and database name of this file is **mytestdb**.
+  Select the backup file and click Ok, then again click Ok. Now you can see that your dbbackup.bak file has been selected and the database name of this file is **mytestdb**.
 <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-7.png" alt="Restore Database"> <br><br>
 - Click Ok. Your database will be successfully restored. You can expand databases and see the **mytestdb** database.
-- Now provide the **Username: Sadik** and **Password: admin**. This credentials will fetch and check from database and redirect you into the next page.
+- Now again go to the browser, On the application login page provide the **Username: _Sadik_** and **Password: _admin_**. These credentials will fetch and check from the database and redirect you to the next page.
 <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
 
-
+This is the main page of this sample application.
   
   
   
