@@ -8,6 +8,8 @@
 | 05 | [Environment Variable Setup](#05) |
 | 06 | [Build and Up the Docker-Compose](#06) |
 | 07 | [Restore the Database](#07) |
+| 08 | [Create Image from Container](#08) |
+| 09 | [Upload Images into Docker Hub](#09) |
 
 ### <a name="01">:diamond_shape_with_a_dot_inside: &nbsp;Application Setup</a> 
 - Download the application source code by running this command: ````git clone https://github.com/Projects-of-Shadikul/Project-10.git````.
@@ -170,9 +172,31 @@ Now we will restore the database that we copied into the database container from
 <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
 
 This is the main page of this sample application.
-  
-  
-  
-  
+
+### <a name="08">:diamond_shape_with_a_dot_inside: &nbsp;Create Image from Container</a> 
+We have the application and database container which is perfectly working for our project. Now we will create our own application image from those containers. To do that we need to follow the following steps:
+- First run this command `````docker ps```` to check the running container.
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-10.png" alt="Docker Running Containers"> <br><br>
+  We can see that our container name is **project-10_web_1** and **project-10_db_1**.
+- Run this command to create Image from container: ````docker commit ContainerName ImageName````. In our case the command will be for Web Container: ````docker commit project-10_web_1 dot-net-core-app````. For Database Container: ````docker commit project-10_db_1 dot-net-core-db````. Here our application image name will be **dot-net-core-app** and database image name will be **dot-net-core-db**.
+- Our application image has been created. We can check it by running this command: ````docker images````.
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-11.png" alt="Docker Images"> <br><br>
+- Now we have to give tag of both images. I will provide same tag as the image name with version. Run this command to give a tag: ````docker image tag ImageName DockerHubUserName/ImageTag:Version````. In our case it will be for the web image: ````docker image tag dot-net-core-app shadikul/dot-net-core-app:v1````. For DB image: ````docker image tag dot-net-core-db shadikul/dot-net-core-db:v1````. After running this command, Images will be created with tag. You can see by running ````docker images```` command like below:
+ <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-12.png" alt="Docker Images"> <br><br>
+ 
+### <a name="09">:diamond_shape_with_a_dot_inside: &nbsp;Upload Images into Docker Hub</a> 
+- Now we will login into https://hub.docker.com from browser and also login from our terminal where we are running all of our docker command. To login dockerhub from terminal you need to follow this below steps:
+  -  Run this command: ````docker login````
+  -  It will ask for username and password. Provide those credentials. You will be now successfully logged in.
+- Now it's time to upload our images into dockerhub. Run this command: ````docker image push DockerHubUserName/ImageTag:Version````. In our case we need to run these commands to upload our two images one by one:
+  ````
+  docker image push shadikul/dot-net-core-app:v1
+  docker image push shadikul/dot-net-core-db:v1
+  ````
+  You will see like this:
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-13.png" alt="Docker Push"> <br><br>
+- Our images has been uploaded into dockerhub successfully. To check this visit https://hub.docker.com/repositories from a browser and you can see your images like below: 
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-14.png" alt="Dockerhub Images"> <br><br>
+
 ...
 ### This documentation is under construction.  I hope it will be completed soon. Thank you for visiting 🙂.
