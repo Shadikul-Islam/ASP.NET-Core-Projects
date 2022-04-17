@@ -5,8 +5,8 @@
 | 02 | [Application Dockerfile Setup](#02) |
 | 03 | [Database Dockerfile Setup](#03) |
 | 04 | [Docker-Compose File Setup](#04) |
-| 05 | [Build and Up the Docker-Compose](#05) |
-| 06 | [](#06) |
+| 05 | [Environment Variable Setup](#05) |
+| 06 | [Build and Up the Docker-Compose](#06) |
 
 ### <a name="01">:diamond_shape_with_a_dot_inside: &nbsp;Application Setup</a> 
 - Download the application source code by running this command: ````git clone https://github.com/Projects-of-Shadikul/Project-10.git````.
@@ -120,14 +120,39 @@ networks:
     driver: bridge
 ````
 
-### <a name="05">:diamond_shape_with_a_dot_inside: &nbsp;Build and Up the Docker-Compose</a> 
+### <a name="05">:diamond_shape_with_a_dot_inside: &nbsp;Environment Variable Setup</a> 
+Run ````ls -a```` command, you can see a file named **.env**. Open the file by running ````vi .env`````this command. Here I have declared the database credentials.
+````
+SA_PASSWORD=rootpa@sw0rdmysql
+ACCEPT_EULA=Y
+````
 
+### <a name="06">:diamond_shape_with_a_dot_inside: &nbsp;Build and Up the Docker-Compose</a> 
 Now our all necessry files are ready. It's time to build and up our docker-compose file to create image and run the container. 
 - Run this command to do that: ````docker-compose up -d --build````.
-- Run this command to show the list of running container: ````docker ps````.
-- Now go to your browser and enter your server ip or localhost then hit eneter button. You will see a page like this:
+- Run this command to show the list of running container: ````docker ps````. There two container will be running, One is web app container and other one is the database.
+- Now go to your browser and enter your server ip or localhost then hit enter button. You will see a page like below:
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-1.png" alt="Login Page"><br>
+  Now provide the **Username: Sadik** and **Password: admin**
+  This credentials will fetch and check from database and redirect you into the next page.
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
+
+You have successfully did this. Now if you want to connect the container database into **SQL Server Management Studio (SSMS)** then you need to do this following steps:
+- Open SSMS:- Press windows key --> Scroll down and click Microsoft SQL Server Tools --> Click Microsoft SQL Server Management Studio
+- Provide the Credentials:
+  **Server Type:** Database Engine
+  **Server Name:** IP Address of the server/Localhost, Port _(In my case my IP address of the VM is 20.25.66.233 and Port we provided in the docker-compose file 1433)_
+  **Authentication:** Select **SQL Server Authentication** from the dropdown
+  **Login:** sa _(We provided **sa** as a Login Username)_
+  **Password:** rootpa@sw0rdmysql _(We provided this password in the .env file)_
   
-
-
+  Your Provided information will look like below:
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
+  
+  Now click **Connect**. You will be connected to the database.
+  
+  
+  
+  
 ...
 ### This documentation is under construction.  I hope it will be completed soon. Thank you for visiting 🙂.
