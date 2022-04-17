@@ -147,20 +147,25 @@ Now we need to connect the container database into **SQL Server Management Studi
   **Password:** rootpa@sw0rdmysql _(We provided this password in the .env file)_
   
   Your Provided information will look like below:
-  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-3.png" alt="DB Credentials"> <br><br>
   Click **Connect**. You will be connected to the database.
   
-  Now we will restore the database that we copied into the database container from the host machine by building the **dbDockerfile**. To restore the database we need to follow this steps:
-  - Go to SSMS. We already connected with the db container so just right click of the **Database** and click **Restore Database** options. 
-    <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
-  - A new window will appear, Select **Device** and click on the right side three dots. Again a new winodw will open clcik on **Add**. Again a new window will open which will show the file system of this container. Scroll up/down and select **/home** folder. One the right side you can see the database backup file named **dbbackup.bak**. Select the backup file and click Ok, then again click Ok,
+Now we will restore the database that we copied into the database container from the host machine by building the **dbDockerfile**. To restore the database we need to follow this steps:
+- Go to SSMS. We already connected with the db container so just right click of the **Database** and click **Restore Database** options. 
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-4.png" alt="Restore Database"> <br><br>
+- A new window will appear, Select **Device** and click on the right side three dots. 
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-5.png" alt="Restore Database"> <br><br>
+  Again a new winodw will open clcik on **Add**. 
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-6.png" alt="Restore Database"> <br><br>
+  Again a new window will open which will show the file system of this container. Scroll up/down and select **home** folder. On the right side you can see the database backup file named **dbbackup.bak**. 
+  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-8.png" alt="Restore Database"> <br><br>
+  Select the backup file and click Ok, then again click Ok. Now you can see that your dbbackup.bak file has been selected and database name of this file is **mytestdb**.
+<br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-7.png" alt="Restore Database"> <br><br>
+- Click Ok. Your database will be successfully restored. You can expand databases and see the **mytestdb** database.
+- Now provide the **Username: Sadik** and **Password: admin**. This credentials will fetch and check from database and redirect you into the next page.
+<br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
 
 
-  Now provide the **Username: Sadik** and **Password: admin**
-  This credentials will fetch and check from database and redirect you into the next page.
-  <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-2.png" alt="Main Page"> <br><br>
-
-You have successfully did this. 
   
   
   
