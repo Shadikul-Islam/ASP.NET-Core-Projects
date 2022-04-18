@@ -10,6 +10,8 @@
 | 07 | [Restore the Database](#07) |
 | 08 | [Create Image from Container](#08) |
 | 09 | [Upload Images into Docker Hub](#09) |
+| 10 | [Run Application from Docker Hub Image](#10) |
+| 09 | [Summary of What we did](#09) |
 
 ### <a name="01">:diamond_shape_with_a_dot_inside: &nbsp;Application Setup</a> 
 - Download the application source code by running this command: ````git clone https://github.com/Projects-of-Shadikul/Project-10.git````.
@@ -197,6 +199,55 @@ We have the application and database containers which is perfectly working for o
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-13.png" alt="Docker Push"> <br><br>
 - Our images have been uploaded into docker hub successfully. To check this visit https://hub.docker.com/repositories from a browser and you can see your images like below: 
   <br> <br> <img src= "https://github.com/Shadikul-Islam/ASP.NET-Core-Projects/blob/master/Dockerize%20ASP.NET%20Core%20Application%20with%20MSSQL%20Server%20Database/Images/Image-14.png" alt="Dockerhub Images"> <br><br>
+
+### <a name="09">:diamond_shape_with_a_dot_inside: &nbsp;Run Application from Docker Hub Image</a> 
+So, we are on the way to the end. At this moment we have our own application and database image. So if we run those images as a container then we can see our application easily. This step is necessary for the project when Developer complete their development and needs to test by the testing team. We can give them those images with a docker-compose file and the testing team can easily run that application without any issue. Let's do this.
+- **Prepare a Docker-Compose file:**
+  First we create new folder by running this command: ````mkdir docker-project````. Go inside that folder by running this command: ````cd docker-project````. Now create a docker-compose file by running this command: ````vi docker-compose.yml````. Now let's write docker compose file for our web application image.
+  ````
+  version: "3.9"
+  services:
+    web:
+        image: "shadikul/dot-net-core-app:v1"
+        ports:
+            - "80:80"
+        depends_on:
+            - db
+        networks:
+            - app-network
+  ````
+  We are pulling our **dot-net-core-app:v1** image that we pushed before. We run this applicaion in 80 port and which will be depends on db and network will be app-network. We already discussed all of those things. Now the turn is for the database.
+  ````
+    db:
+        image: "shadikul/dot-net-core-db:latest"
+        environment:
+            SA_PASSWORD: ${SA_PASSWORD}
+            ACCEPT_EULA: ${ACCEPT_EULA}
+        ports:
+            - "1433:1433"
+        networks:
+            - app-network
+   ````
+  We are pulling our **dot-net-core-db:v1** image that we pushed before. We run this applicaion in 1433 port and network will be app-network. We already discussed all of those things. Now we need to defien the Network part.
+  ````
+  networks:
+  app-network:
+    driver: bridge
+  ````
+  Now our docker-compose.yml file is ready. Save it.
+  
+- **Prepare a .env file:**
+  
+  Now we need to defien the **.env** file for database credentials. Run this command ````vi .env```` and paste this below credentials.
+  ````
+  SA_PASSWORD=rootpa@sw0rdmysql
+  ACCEPT_EULA=Y
+  ````
+  Now our all things are ready to run our application.
+  
+- **Create Container and Run the Application**
+  Run this command ````docker-compose up -d --build````. Your applicaiton will be up and running you can see your application from browser.
+  **Remember** one thing, this time we don't need to restore the database becuase we already created that image with the database. So just go to the applicaiton from browser and login with the credentials. You should login successfully.
 
 ...
 ### This documentation is under construction.  I hope it will be completed soon. Thank you for visiting 🙂.
