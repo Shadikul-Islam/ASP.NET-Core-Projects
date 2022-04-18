@@ -231,8 +231,8 @@ So, we are on the way to the end. At this moment we have our own application and
   We are pulling our **dot-net-core-db:v1** image that we pushed before. We run this application in **1433 ports** and the network will be **app-network**. We already discussed all of those things above. Now we need to defien the Network part.
   ````
   networks:
-  app-network:
-    driver: bridge
+    app-network:
+      driver: bridge
   ````
   Now our docker-compose.yml file is ready. Put all of those parts together like below and Save it.
   ````
