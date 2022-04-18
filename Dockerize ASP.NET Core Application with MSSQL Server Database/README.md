@@ -1,4 +1,4 @@
-## <p align=left>Dockerize ASP.NET Core Application with MSSQL Server Database<br> <br> </p>
+## <p align=left>Dockerize ASP.NET Core Application with Microsoft SQL Server Database<br> <br> </p>
 | **SL** | **Topic** |
 | --- | --- |
 | 01 | [Application Setup](#01) |
@@ -11,7 +11,7 @@
 | 08 | [Create Image from Container](#08) |
 | 09 | [Upload Images into Docker Hub](#09) |
 | 10 | [Run Application from Docker Hub Image](#10) |
-| 11 | [Summary of What we did](#11) |
+| 11 | [Summary of What We Have Done](#11) |
 
 ### <a name="01">:diamond_shape_with_a_dot_inside: &nbsp;Application Setup</a> 
 - Download the application source code by running this command: ````git clone https://github.com/Projects-of-Shadikul/Project-10.git````.
@@ -219,7 +219,7 @@ So, we are on the way to the end. At this moment we have our own application and
   We are pulling our **dot-net-core-app:v1** image that we pushed before. We run this application in **80 ports** and which will depend on db and the network will be **app-network**. We already discussed all of those things above. Now the turn is for the database.
   ````
     db:
-        image: "shadikul/dot-net-core-db:latest"
+        image: "shadikul/dot-net-core-db:v1"
         environment:
             SA_PASSWORD: ${SA_PASSWORD}
             ACCEPT_EULA: ${ACCEPT_EULA}
@@ -271,5 +271,16 @@ So, we are on the way to the end. At this moment we have our own application and
 - **Create Container and Run the Application:**
   Run this command ````docker-compose up -d --build````. Your application will be up and running you can see your application from the browser. Now we need to restore the database. You can follow this step again [Restore the Database](#07) to restore. After completing the restore go to the application from the browser and login with the credentials. You should login successfully.
 
-...
-### This documentation is under construction.  I hope it will be completed soon. Thank you for visiting 🙂.
+### <a name="11">:diamond_shape_with_a_dot_inside: &nbsp;Summary of What We have Done</a>
+Let's recap what we have done.
+1. First, We download our application by using git clone.
+2. We setup our application Dockerfile and database Dockerfile.
+3. We setup our docker-compose file and also setup our .env file.
+4. We build and Up our docker-compose file and we can see our application from the browser.
+5. We connect our database container to SSMS and restore our database.
+6. We create our own image and upload it into the docker hub.
+7. Finally, we run our applicaion using our uploaded docker hub image.
+
+
+
+#### :diamond_shape_with_a_dot_inside: &nbsp;That’s it. We have learned How to Dockerize ASP.NET Core Application with Microsoft SQL Server Database. :diamond_shape_with_a_dot_inside: &nbsp;Happy Learning. :diamond_shape_with_a_dot_inside: &nbsp;
